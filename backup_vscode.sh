@@ -8,7 +8,7 @@ echo "download latest vscode"
 cd "$BACKUP_PATH"
 wget --content-disposition "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 
-echo "backup config.json and keybindings.json"
+echo "backup settings.json and keybindings.json"
 CFG_FOLDER="$HOME/.config/Code/User/"
 cp "$CFG_FOLDER/settings.json" "$CFG_FOLDER/keybindings.json" "$BACKUP_PATH" 2> /dev/null
 
