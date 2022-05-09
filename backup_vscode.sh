@@ -42,8 +42,8 @@ cd "$BACKUP_PATH/extensions"
 awk -F. 'NF > 0 {print "wget -q --show-progress -O "$1"."$2".vsix https://"$1".gallery.vsassets.io/_apis/public/gallery/publisher/"$1"/extension/"$2"/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"}' "$BACKUP_PATH/extensions.txt" | bash
 
 echo "> creating backup archive"
-cd "$HOME/.vscode"
-zip -q -r "$BACKUP_ARCHIVE" "$BACKUP_FOLDER"
+cd "$BACKUP_FOLDER"
+zip -q -r "$BACKUP_ARCHIVE" .
 
 echo "> done : $BACKUP_ARCHIVE_PATH"
 exit 0
