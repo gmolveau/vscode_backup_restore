@@ -4,8 +4,11 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-for app in awk wget; do command -v "${app}" &> /dev/null || not_available+=("${app}"); done
-((${#not_available[@]} > 0)) && echo "Please install missing dependencies: ${not_available[*]}" 1>&2 && exit 1
+deps=0
+for app in awk wget; do
+    ! command -v ${app} &> /dev/null && echo "$name is not installed" && deps=1
+done
+[[ $deps -ne 0 ]] && exit 1
 
 BACKUP_FOLDER="backup_$(date +'%Y-%m-%dT%H-%M-%S')"
 BACKUP_PATH="$HOME/.vscode/$BACKUP_FOLDER"
@@ -20,7 +23,7 @@ function clean_up() {
     [ -f "$BACKUP_ARCHIVE_PATH" ] && rm "$BACKUP_ARCHIVE_PATH"
     exit $ARG
 }
-trap clean_up ERR
+trap clean_up ERR SIGINT
 
 echo "download latest vscode"
 cd "$BACKUP_PATH"
