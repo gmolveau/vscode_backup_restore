@@ -26,6 +26,7 @@ wget -q --show-progress --content-disposition "https://code.visualstudio.com/sha
 # wget -q --show-progress --content-disposition "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal"
 
 echo "backup settings.json and keybindings.json"
+echo "backup settings.json and keybindings.json"
 CFG_FOLDER="$HOME/.config/Code/User/"
 [[ -e "$CFG_FOLDER/settings.json" ]] && cp "$CFG_FOLDER/settings.json" "$BACKUP_PATH"
 [[ -e "$CFG_FOLDER/keybindings.json" ]] && cp "$CFG_FOLDER/keybindings.json" "$BACKUP_PATH"
