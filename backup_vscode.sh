@@ -4,6 +4,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+for app in awk wget; do command -v "${app}" &> /dev/null || not_available+=("${app}"); done
+((${#not_available[@]} > 0)) && echo "Please install missing dependencies: ${not_available[*]}" 1>&2 && exit 1
+
 BACKUP_FOLDER="backup_$(date +'%Y-%m-%dT%H-%M-%S')"
 BACKUP_PATH="$HOME/.vscode/$BACKUP_FOLDER"
 BACKUP_ARCHIVE="vscode_$BACKUP_FOLDER.zip"
@@ -26,13 +29,12 @@ wget -q --show-progress --content-disposition "https://code.visualstudio.com/sha
 # wget -q --show-progress --content-disposition "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal"
 
 echo "backup settings.json and keybindings.json"
-echo "backup settings.json and keybindings.json"
 CFG_FOLDER="$HOME/.config/Code/User/"
 [[ -e "$CFG_FOLDER/settings.json" ]] && cp "$CFG_FOLDER/settings.json" "$BACKUP_PATH"
 [[ -e "$CFG_FOLDER/keybindings.json" ]] && cp "$CFG_FOLDER/keybindings.json" "$BACKUP_PATH"
 
 echo "backup extensions"
-code --list-extensions >"$BACKUP_PATH/extensions.txt"
+code --list-extensions > "$BACKUP_PATH/extensions.txt"
 cd "$BACKUP_PATH/extensions"
 awk -F. 'NF > 0 {print "wget -q --show-progress -O "$1"."$2".vsix https://"$1".gallery.vsassets.io/_apis/public/gallery/publisher/"$1"/extension/"$2"/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"}' "$BACKUP_PATH/extensions.txt" | bash
 
