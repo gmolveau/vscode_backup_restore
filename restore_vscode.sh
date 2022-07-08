@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # usage : first (and only) argument is the path to the zip backup file
-
-([ -z "$1" ] || [ ! -f $1 ]) && (echo "backup file not found" && exit 1)
+if [ ! -f "$1" ]; then
+    echo "backup file not found"
+    exit 1
+fi
 
 # structure of the zip backup file :
 # code_XXX_amd64.deb
@@ -26,4 +28,3 @@ echo "restoring extensions"
 for ext in "$WORKDIR"/extensions/*.vsix; do
     code --install-extension "$ext"
 done
-
