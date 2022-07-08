@@ -16,6 +16,9 @@ BACKUP_ARCHIVE="vscode_$BACKUP_FOLDER.zip"
 BACKUP_ARCHIVE_PATH="$HOME/.vscode/$BACKUP_ARCHIVE"
 mkdir -p "$BACKUP_PATH/extensions"
 
+echo "> add restore script"
+cp restore_vscode.sh "$BACKUP_PATH/"
+
 function clean_up() {
     ARG=$?
     echo ">>> error #$ARG - cleaning up..."
@@ -42,7 +45,7 @@ cd "$BACKUP_PATH/extensions"
 awk -F. 'NF > 0 {print "wget -q --show-progress -O "$1"."$2".vsix https://"$1".gallery.vsassets.io/_apis/public/gallery/publisher/"$1"/extension/"$2"/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"}' "$BACKUP_PATH/extensions.txt" | bash
 
 echo "> creating backup archive"
-cd "$BACKUP_FOLDER"
+cd "$BACKUP_PATH"
 zip -q -r "$BACKUP_ARCHIVE" .
 
 echo "> done : $BACKUP_ARCHIVE_PATH"
