@@ -34,8 +34,8 @@ Only on linux, install vscode if missing, restore extensions and settings
 
 ### restore script : environment variables
 
-- `RESTORE_EXTENSIONS` : default to `1`, disable with `0`
-- `RESTORE_CONFIG` : default to `1`, disable with `0`
+- `SKIP_EXTENSIONS` : default to `0`
+- `SKIP_CONFIG` : default to `0`
 
 ## Getting started
 
