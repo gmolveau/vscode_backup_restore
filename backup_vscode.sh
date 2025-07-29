@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-
 set -o errexit
-set -o nounset
 set -o pipefail
+set -o nounset
+# set -o xtrace
 
+# check for required apps
 missing=0
 for app in awk wget curl zip; do
     ! command -v ${app} &> /dev/null && echo "$name is not installed" && missing=1
@@ -14,7 +15,7 @@ BACKUPS_FOLDER="${BACKUPS_FOLDER:-${HOME}/.vscode/backups}"
 BACKUP_FOLDER="backup_$(date +'%Y-%m-%dT%H-%M-%S')"
 BACKUP_PATH="${BACKUPS_FOLDER}/${BACKUP_FOLDER}"
 BACKUP_ARCHIVE="vscode_${BACKUP_FOLDER}.zip"
-BACKUP_ARCHIVE_PATH="${HOME}/.vscode/${BACKUP_ARCHIVE}"
+BACKUP_ARCHIVE_PATH="${BACKUPS_FOLDER}/${BACKUP_ARCHIVE}"
 mkdir -p "$BACKUP_PATH/extensions"
 
 function clean_up() {
