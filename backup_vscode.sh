@@ -35,7 +35,7 @@ function clean_on_error() {
 trap clean_on_error ERR SIGINT
 
 echo "> add restore script"
-cp restore_vscode.sh "${BACKUP_PATH}/"
+cp restore_vscode_linux.sh "${BACKUP_PATH}/"
 
 echo "> download current vscode"
 commit_id=$(code --status | head -1 | grep -oP "[a-z0-9]{40}")

@@ -11,10 +11,7 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ## RESTORE_CONFIG, default to 1
 
 echo "installing vscode"
-if ! command -v "code" &> /dev/null; then
-    echo "vscode is not installed"
-    sudo dpkg -i "${__dir}"/vscode*.deb
-fi
+sudo dpkg -i "${__dir}"/vscode*.deb
 
 RESTORE_EXTENSIONS="${RESTORE_EXTENSIONS:-1}"
 if [ "${RESTORE_EXTENSIONS}" == 1 ]; then
